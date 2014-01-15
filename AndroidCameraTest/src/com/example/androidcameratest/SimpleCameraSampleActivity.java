@@ -11,10 +11,10 @@ import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.Size;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+//import android.hardware.Sensor;
+//import android.hardware.SensorEvent;
+//import android.hardware.SensorEventListener;
+//import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.app.Activity;
@@ -37,13 +37,13 @@ public class SimpleCameraSampleActivity extends Activity {
 	private SurfaceView mySurfaceView;
 	
 	// 地磁気・加速度センサー 
-    private SensorManager mySensor;
+//    private SensorManager mySensor;
     
     // 地磁気・加速度センサー情報
-    private static final int MATRIX_SIZE = 16;
+//    private static final int MATRIX_SIZE = 16;
     private static final int DIMENSION = 3;
-    private float[] magneticValues = new float[DIMENSION];
-    private float[] accelerometerValues = new float[DIMENSION];
+//    private float[] magneticValues = new float[DIMENSION];
+//    private float[] accelerometerValues = new float[DIMENSION];
     private float[] orientationValues = new float[DIMENSION];
     
     /**
@@ -181,7 +181,8 @@ public class SimpleCameraSampleActivity extends Activity {
 	/**
 	 * センサー制御のイベント処理
 	 */
-    
+    // そもそも簡単なカメラ・アプリに地磁気や加速度センサの値は必要ない。comment outしても問題ない。
+    /*
 	private SensorEventListener mSensorEventListener =
 	    new SensorEventListener() {
 	        
@@ -224,7 +225,7 @@ public class SimpleCameraSampleActivity extends Activity {
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
             }
         };
-
+	*/
                 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -237,7 +238,7 @@ public class SimpleCameraSampleActivity extends Activity {
         holder.addCallback(mSurfaceListener);
         
         // センサーを取得する
-        mySensor = (SensorManager)getSystemService(SENSOR_SERVICE);
+//        mySensor = (SensorManager)getSystemService(SENSOR_SERVICE);
 
         Button buttonOK = (Button)this.findViewById(R.id.buttonSave);
         buttonOK.setOnClickListener(new OnClickListener() {
@@ -261,20 +262,20 @@ public class SimpleCameraSampleActivity extends Activity {
         super.onResume();
         
         // 地磁気センサ
-        mySensor.registerListener(mSensorEventListener,
-                                    mySensor.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-                                    SensorManager.SENSOR_DELAY_UI);
-        
-        // 加速度センサ
-        mySensor.registerListener(mSensorEventListener,
-                                    mySensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                                    SensorManager.SENSOR_DELAY_UI);
+//        mySensor.registerListener(mSensorEventListener,
+//                                    mySensor.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+//                                    SensorManager.SENSOR_DELAY_UI);
+//        
+//        // 加速度センサ
+//        mySensor.registerListener(mSensorEventListener,
+//                                    mySensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+//                                    SensorManager.SENSOR_DELAY_UI);
     }
 	
 	@Override
     public void onPause() {
         super.onPause();
-        mySensor.unregisterListener(mSensorEventListener);
+//        mySensor.unregisterListener(mSensorEventListener);
     }
 	
     /**
