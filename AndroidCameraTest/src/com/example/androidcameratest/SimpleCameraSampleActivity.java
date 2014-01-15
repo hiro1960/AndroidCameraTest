@@ -189,8 +189,11 @@ public class SimpleCameraSampleActivity extends Activity {
 	        public void onSensorChanged(SensorEvent event) {
 	            
 	            // Nexus7では常にSENSOR_STATUS_UNRELIABLEになるのでチェックしない　→　Nexus7以外では有効にしておかないと露出がおかしくなる！
-//	            if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE)
-//	                return;
+	        	// 但し、初代Nexus7ではSensorManager.SENSOR_STATUS_ACCURACY_HIGH=3を返してくる。
+	        	// Android 4.x以降はSensorManager自体が非推奨になったらしく、それ以降に実装が行われた新しいAndroid機器ではUNRELIABLEを返してくるらしい。
+	        	// Galaxy S2, XperiaAero等でUNRELIABLEという報告があったが、自分のGalaxy S2はSENSOR_STATUS_ACCURACY_HIGHだった。
+	            if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE)
+	                return;
 
 	            
 	            switch (event.sensor.getType()) {
