@@ -106,6 +106,8 @@ public class SimpleCameraSampleActivity extends Activity {
                 // 0 or 引数なし：背面カメラ、あるいはHWのデフォルトを指定する
                 // 但し初代Nexus7は前面カメラしかないためか、"0"を指定する必要がある。
                 try {
+                	// Previewをコメントアウトすると、写真がとれない。
+                	// 下のsurfaceChanged()にて画面パラメータの設定をしているので、サイズ、オートフォーカス等が動かない。
                     myCamera.setPreviewDisplay(holder);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -270,12 +272,29 @@ public class SimpleCameraSampleActivity extends Activity {
 //        mySensor.registerListener(mSensorEventListener,
 //                                    mySensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 //                                    SensorManager.SENSOR_DELAY_UI);
+        
+        // 本当はonPause()でカメラ・リソースを解放し、再度取得したいがPreviewの設定をするためのholderがscope内にないのでできない。
+//        if (myCamera == null) {
+//            myCamera = Camera.open(0); 
+//            try {
+//                myCamera.setPreviewDisplay(holder);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 	
 	@Override
     public void onPause() {
         super.onPause();
 //        mySensor.unregisterListener(mSensorEventListener);
+        // 本当はonpause()でカメラ・リソースを一旦解放し（他のアプリのために）、onResume()で再度取得すべきと思う。
+        // しかしonResumeでPreviewの設定ができないし、特に解放しなくても問題ないみたい。
+//        if (myCamera != null) {
+//	        myCamera.stopPreview();
+//	        myCamera.release();
+//	        myCamera = null;
+//        }
     }
 	
     /**
